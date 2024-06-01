@@ -1,6 +1,6 @@
-using JuMP
-using HiGHS
-using Random
+using JuMP # Optimization package
+using HiGHS # Solver for LP
+using Random # Random numbers module
 
 # For reproducible random numbers
 Random.seed!(1234)
@@ -17,7 +17,7 @@ B = [ # output matrix, each column is a sector
 l = [0.4, 0.3, 0.2, 0.1] # labor input
 r = 0.1 # profit rate
 C = B - (1 + r) * A
-d = ones(n_cols) # numeraire
+d = ones(n_cols) # numeraire (in the implementation a column vector)
 
 lp_solver = Model(HiGHS.Optimizer) # initialize solver
 @variable(lp_solver, x[1:n_rows] ≥ 0.0) # define intensities (in the implementation a column vector)
