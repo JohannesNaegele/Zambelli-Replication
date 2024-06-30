@@ -2,10 +2,10 @@
 function envelope(A_tensor, B_tensor, l_tensor; stepsize = 0.01, verbose = false, extend = true, calc_all = true)
 
     # Bring data in matrix shape
-    A = reduce(hcat, A_tensor[:, :, i, j]' * Diagonal(Sraffa.safe_divide.(1.0, B_tensor[:, i, j])) for i in axes(A_tensor, 3) for j in axes(A_tensor, 4))
+    A = reduce(hcat, A_tensor[:, :, i, j]' * Diagonal(safe_divide.(1.0, B_tensor[:, i, j])) for i in axes(A_tensor, 3) for j in axes(A_tensor, 4))
     n_goods = size(A, 1)
     B = reduce(hcat, I(n_goods) for i in axes(B_tensor, 2) for j in axes(B_tensor, 3))
-    l = reduce(vcat, l_tensor[:, i, j] .* Sraffa.safe_divide.(1.0, B_tensor[:, i, j]) for i in axes(l_tensor, 2) for j in axes(l_tensor, 3))'
+    l = reduce(vcat, l_tensor[:, i, j] .* safe_divide.(1.0, B_tensor[:, i, j]) for i in axes(l_tensor, 2) for j in axes(l_tensor, 3))'
     d = axes(A, 1) .== 1
 
     # Preallocate solver variables
