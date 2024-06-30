@@ -1,5 +1,5 @@
 """ Compute the envelope for all countries at once. """
-function envelope(A_tensor, B_tensor, l_tensor; stepsize = 0.01, verbose = false, extend = true, calc_all = true)
+function envelope(A_tensor, B_tensor, l_tensor; stepsize = 0.01, extend = true, calc_all = true)
 
     # Bring data in matrix shape
     A = reduce(hcat, A_tensor[:, :, i, j]' * Diagonal(safe_divide.(1.0, B_tensor[:, i, j])) for i in axes(A_tensor, 3) for j in axes(A_tensor, 4))
@@ -31,7 +31,6 @@ function envelope(A_tensor, B_tensor, l_tensor; stepsize = 0.01, verbose = false
         model_intensities = model_x,
         model_intensities_trunc = model_x_trunc,
         model_prices = model_p,
-        verbose = verbose,
         effects_sectors = 1:n_goods,
         extend = extend,
         calc_all = calc_all
